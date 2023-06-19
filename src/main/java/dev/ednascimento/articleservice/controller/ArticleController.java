@@ -37,7 +37,7 @@ public class ArticleController {
         articles.add(article);
     }
 
-    @PostMapping("{/id}")
+    @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void update(@RequestBody Article article, @PathVariable Integer id) {
         var currentArticle = articles.stream().filter(a -> a.id().equals(id)).findFirst();

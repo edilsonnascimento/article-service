@@ -19,6 +19,7 @@ PUT http://localhost:8081/api/articles/2
 Content-Type: application/json
 
 {
+  "id": 2,
   "title": "My secound Post UPDATE",
   "body": "My conteud of secound Post very well UPDATE."
 }

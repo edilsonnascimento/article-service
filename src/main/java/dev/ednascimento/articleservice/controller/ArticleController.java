@@ -1,13 +1,13 @@
 package dev.ednascimento.articleservice.controller;
 
+import dev.ednascimento.articleservice.exception.BusinessException;
 import dev.ednascimento.articleservice.model.Article;
 import jakarta.annotation.PostConstruct;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @RestController
 @RequestMapping("/api/articles")
@@ -27,13 +27,16 @@ public class ArticleController {
     }
 
     @GetMapping("/{id}")
-    public Optional<Article> findById(@PathVariable Integer id) {
-        return articles.stream().filter(article -> article.id().equals(id)).findFirst();
+    public Optional<Article> findById(@PathVariable Integer id) throws BusinessException {
+        return Optional.ofNullable(articles.stream()
+                .filter(article -> article.id().equals(id))
+                .findFirst()
+                .orElseThrow(() -> new BusinessException("Not found")));
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public void create(@RequestBody Article article) {
+    public void create(@Valid @RequestBody Article article) {
         articles.add(article);
     }
 
